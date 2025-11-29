@@ -1,0 +1,29 @@
+{
+  "tree_settings": {
+    "max_display_depth": 100,
+    "indent_char": "│   ",
+    "branch_char": "├── ",
+    "last_branch_char": "└── ",
+    "colors": {
+      "node_id": "\u001b[33m", 
+      "value_choice": "\u001b[32m", 
+      "backtrack": "\u001b[31m", 
+      "reset": "\u001b[0m",
+      "info": "\u001b[36m"
+    },
+    "labels": {
+      "subgrid_rows": ["A", "B", "C"],
+      "subgrid_cols": ["X", "Y", "Z"]
+    }
+  },
+  "grid_settings": {
+    "clue_color": "\u001b[37m", 
+    "solved_color": "\u001b[32m",
+    "border_style": "double",
+    "show_coordinates": true
+  },
+  "interface": {
+    "prompt_symbol": ">>> ",
+    "welcome_message": "=== SUDOKU VISUALIZER V1.0 ==="
+  }
+}

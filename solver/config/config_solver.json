@@ -1,0 +1,126 @@
+{
+  "metadata": {
+    "version": "1.0.2",
+    "author": "Constantine E Hinds",
+    "last_updated": "2025-11-28"
+  },
+  "domain_size": 9,
+  "cell_size": 9,
+  "subgrid_size": 9,
+  "number_subgrids": 9,
+  "number_of_cells": 81,
+  "subgrid_width": 3,
+  "subgrid_height": 3,
+  "use_max_attempts": false,
+  "max_attempts": 10,
+  "unassigned_cell": 0,
+
+  "use_mvc": true,
+  "use_lookahead": false,
+  "use_vizualization": false,
+
+  "formats": {
+    "use_custom_formatting": true,
+    "font": {
+      "use_custom_font": true,
+      "family": "Arial",
+      "size": 14
+    },
+    "cell_border": {
+      "use_custom_border": true,
+      "style": "1px solid black"
+    },
+    "alignment": {
+      "use_custom_alignment": true,
+      "horizontal": "center",
+      "vertical": "middle"
+    }
+  },
+
+  "visualizations": {
+    "unsolved_puzzle": true,
+    "solved_puzzle": true,
+    "node_tree": true,
+    "table_format": {
+      "table": "white",
+      "prefilled": "gray",
+      "correct": "green",
+      "incorrect": "red"
+    }
+  },
+
+  "node_config": {
+    "max_depth": 50,
+    "display": {
+      "show_node_id": true,
+      "show_current_domain": true,
+      "show_removed_values": true
+    },
+    "formatting": {
+      "font": "Courier New",
+      "font_size": 12,
+      "node_color": "#333333",
+      "domain_color": "#0055AA",
+      "removed_values_color": "#AA0000",
+      "background_color": "#F0F0F0",
+      "border": "1px dashed #888888",
+      "padding": "6px",
+      "margin": "4px"
+    },
+    "backtracking": {
+      "enabled": true,
+      "label": "Backtrack",
+      "font": "Courier New",
+      "font_size": 12,
+      "text_color": "#FFFFFF",
+      "background_color": "#CC0000",
+      "border": "1px solid #990000",
+      "highlight_style": "italic"
+    }
+  },
+
+  "manual_solving": {
+    "enabled": true,
+    "max_wrong_attempts": 3
+  },
+
+  "logging": {
+    "enable_logging": true,
+    "log_level": "INFO",
+    "log_file": "solver.log"
+  },
+
+  "performance": {
+    "max_recursion_depth": 10000,
+    "timeout_seconds": 30
+  },
+
+  "strings": {
+    "solution_intro": "The solution is as follows: {}",
+    "puzzle_loaded": "Puzzle '{}' has been loaded.",
+    "solving_started": "Solving puzzle '{}'. Please wait...",
+    "solved_success": "Puzzle '{}' solved successfully!",
+    "solved_failure": "Unable to solve puzzle '{}'. Please check the input.",
+    "invalid_input": "The input provided is not valid. Please enter a valid puzzle string.",
+    "load_error": "Error loading puzzle '{}'. File may be missing or corrupted.",
+    "visualization_disabled": "Visualization is currently disabled in the configuration."
+  },
+
+  "puzzles": {
+    "test_puzzle": "530070000600195000098000060800060003400803001700020006060000280000419005000080079_5346789126721953481983425678597761423426853791713924856961537284387419625245286179",
+    
+    "empty_puzzle": "000000000000000000000000000000000000000000000000000000000000000000000000000000000_123456789123456789123456789123456789123456789123456789123456789123456789123456789",
+
+    "project_euler_01": "003020600900305001001806400008102900700000008006708200002609500800203009005010300_483921657967345821251876493548132976729564138136798245372689514814573629695412387",
+    "//_comment_euler": "Difficulty: Medium | Unassigned: 52 | Source: Project Euler Problem 96",
+    "//_link_euler": "https://projecteuler.net/problem=96",
+
+    "norvig_hard": "400000805030000000000700000020000060000804000000100000000603070500200000104000000_417369825632158947958724316825437169791586432346912758289643571573291684164875293",
+    "//_comment_norvig": "Difficulty: Hard | Unassigned: 64 | Source: Peter Norvig's 'Hardest' Example",
+    "//_link_norvig": "https://norvig.com/sudoku.html",
+
+    "inkala_ai_escargot": "100007090030020008009600500005300900010080002600004000300000010040000007007000300_162857493534129678789643521475312986913586742628794135356478219241935867897261354",
+    "//_comment_inkala": "Difficulty: Extreme | Unassigned: 60 | Source: Arto Inkala's AI Escargot (2006)",
+    "//_link_inkala": "https://abcnews.go.com/blogs/headlines/2012/06/can-you-solve-the-hardest-ever-sudoku"
+  }
+}
