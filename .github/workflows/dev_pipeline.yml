@@ -9,29 +9,28 @@ on:
 jobs:
   smoke-test:
     runs-on: ubuntu-latest
-
+    
     steps:
     - uses: actions/checkout@v3
-
+    
     - name: Set up Python 3.9
       uses: actions/setup-python@v4
       with:
         python-version: "3.9"
-
+    
     - name: Syntax Check
       run: |
         # Compiles python files in the solver directory to check for syntax errors
         python -m compileall ./solver
-
+    
     - name: Base Solver Smoke Test
       working-directory: ./solver
       run: |
-        # [AI Fix] Manually load config from parent dir (..) and pass to Solver to ensure settings are applied
-        python -c "import json; import sys; sys.path.append('.'); config = json.load(open('../config_solver.json')); from sudoku_solver import SudokuSolver; solver = SudokuSolver(config=config); print('Solving test_puzzle...'); success = solver.solve(); assert success, 'Solver failed to solve test_puzzle'"
-
+        # Load config from ../config/ directory and pass to Solver
+        python -c "import json; import sys; sys.path.append('.'); config = json.load(open('../config/config_solver.json')); from sudoku_solver import SudokuSolver; solver = SudokuSolver(config=config); print('Solving test_puzzle...'); success = solver.solve(); assert success, 'Solver failed to solve test_puzzle'"
+    
     - name: Visualizer Smoke Test
       working-directory: ./solver
       run: |
-        # [AI Fix] Updated arguments to match the Python class (config_filename)
-        # We removed '../' because the new Python script automatically searches the Project Root.
-        python -c "from sudoku_visualizer import SudokuVisualizer; viz = SudokuVisualizer(config_filename='config_solver.json', viz_config_filename='config_visualization.json'); print('Visualizing test_puzzle...'); viz.run_visualizations('test_puzzle')"
+        # Updated to point to config folder
+        python -c "from sudoku_visualizer import SudokuVisualizer; viz = SudokuVisualizer(config_filename='../config/config_solver.json', viz_config_filename='../config/config_visualization.json'); print('Visualizing test_puzzle...'); viz.run_visualizations('test_puzzle')"
