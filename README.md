@@ -1,112 +1,178 @@
-# Sudoku Solver & Benchmark
+# CSCEA 405 - Artificial Intelligence
 
-A Python-based Sudoku solver that implements and benchmarks a basic backtracking algorithm against an optimized Constraint Satisfaction Problem (CSP) solver.
+## Constraint Satisfaction Problem (Sudoku)
 
-This project includes two Sudoku solvers for performance comparison, a random puzzle generator, and a suite of unit tests.
+A configurable, Python-based Sudoku solver featuring advanced backtracking algorithms, heuristics (Minimum Remaining Values), and a rich console-based visualization system.
+
+---
 
 ## Features
 
-* Basic Solver (`solve_basic`): A simple brute-force backtracking solver.
-* Smart Solver (`solve_smart`): An optimized CSP solver using the Minimum Remaining Values (MRV) heuristic.
-* Puzzle Generator: Creates new 9×9 Sudoku puzzles with a guaranteed unique solution.
-* Benchmarking Suite: Compares performance (time and recursion steps) of the two solvers using a puzzle library.
-* Unit Tests: Includes tests built with Python’s `unittest` module to validate core logic.
+### Smart Solving
+Uses recursive backtracking optimized with the Minimum Values Constraint (MVC) heuristic.
 
-## How to Run
+### Lookahead Strategy
+Optional forward-checking to prune dead-end paths early.
 
-```bash
-# Clone the repository (once it's on GitHub)
-git clone https://github.com/your-username/sudoku-solver.git
-cd sudoku-solver
+### Visualizer Interface
+Interactive console UI to select built-in puzzles or import custom ones.
 
-# Run the main application
-python main.py
+### Decision Tree Logging
+Visualizes the decision path, showing attempts, backtracks, and lookahead prunes.
+
+### Fully Configurable
+JSON-based configuration for solver parameters, visualizations, and colors.
+
+### Famous Puzzles Included
+Comes with test cases like Project Euler #96, Peter Norvig's hard puzzles, and Arto Inkala's "AI Escargot".
+
+---
+
+## Project Structure
+
+```
+Your-Repository-Root/
+├── .github/
+│   └── workflows/
+│       └── dev_pipeline.yml   # Universal CI Pipeline
+├── solver/                    # Main Project Directory
+│   ├── .vscode/               # VS Code Debug Configuration
+│   ├── config/                # Settings & puzzle strings
+│   ├── puzzles/               # Custom puzzle text files
+│   ├── sudoku_solver.py       # Core logic class
+│   └── sudoku_visualizer.py   # Main entry point & UI
+├── .gitignore
+├── LICENSE
+└── README.md
 ```
 
-## Development Roadmap
+---
 
-### Week 1: Foundations and Basic Backtracking Solver
+## Setup and Installation
 
-Goal: Build a fully functional baseline solver for benchmarking.
+1. **Prerequisites:** Python 3.9 or higher.
+2. **Clone/Download** the repository to a local folder.
+3. **Environment:** No external dependencies are required (uses standard libraries: json, os, importlib).
 
-Primary Developer Tasks:
+---
 
-* Board representation: Decide on a 9×9 data structure (e.g., list of lists with 0 for empty cells).
-* Helper functions:
+## Running the Project
 
-  * `get_peers(row, col)`: Return all peers in the same row, column, and 3×3 box.
-  * `is_valid_move(board, row, col, num)`: Check if a move is valid.
-* Basic solver (`solve_basic`):
+### Whole Project Pipeline
+**Status:** Coming Soon
 
-  * Implement recursive backtracking.
-  * Find the next empty cell top-to-bottom, left-to-right.
-  * Try numbers 1–9 in order and backtrack when needed.
+### Puzzle Generator
+**Status:** Coming Soon
 
-Team Tasks:
+### Sudoku Solver
 
-* Set up the Python `unittest` framework.
-* Write tests for `get_peers` and `is_valid_move`.
-* Create a puzzle library of 10–15 puzzles (easy, medium, hard) with solutions.
+To run the interactive solver and visualizer, you must run the script from within the solver directory so it can correctly locate configuration files.
 
-### Week 2: Smart CSP Solver (MRV and Optional Forward Checking)
+#### Via Command Line
 
-Goal: Build an optimized solver for comparison.
+```bash
+# Navigate to the solver directory
+cd solver
 
-Primary Developer Tasks:
+# Run the visualizer entry point
+python sudoku_visualizer.py
+```
 
-* `get_domain(board, row, col)`: Return valid candidate values for a cell.
-* MRV heuristic:
+#### Via Visual Studio Code
 
-  * `find_best_cell(board)`: Return the empty cell with the smallest domain.
-* Smart solver (`solve_smart`):
+1. Open the `solver` folder specifically in VS Code (File > Open Folder... > Select `solver`).
+2. Open `sudoku_visualizer.py`.
+3. Press **F5** (or navigate to Run and Debug > Run Sudoku Visualizer).
 
-  * Modify the basic solver to use MRV.
-  * Try only values from the cell’s domain.
-  * Optional: Add forward checking to prune the search early if domains become empty.
+### Unit Tests
+**Status:** Coming Soon
 
-Team Tasks:
+---
 
-* Add tests to validate that `solve_smart` solves known puzzles correctly.
+## Usage Guide
 
-### Week 3: Puzzle Generator
+When you run the visualizer, you'll see a menu like this:
 
-Goal: Generate valid puzzles with a unique solution.
+```
+=== SUDOKU VISUALIZER V1.0 ===
 
-Primary Developer Tasks:
+Available Puzzles from Config:
+1. test_puzzle
+2. empty_puzzle
+3. project_euler_01
+...
+6. [Import from File]
 
-* Design and refine the puzzle generation method (remove-from-solution approach).
+>>> Select a number:
+```
 
-Team Tasks:
+- Select a number (1-5) to solve one of the pre-configured puzzles.
+- Select **[Import from File]** to provide a path to a .txt file containing a raw 81-character puzzle string (e.g., `puzzles/my_puzzle.txt`).
 
-* Generate a fully solved Sudoku board (use `solve_smart` on an empty grid).
-* Remove values while ensuring uniqueness:
+---
 
-  * Remove a value (set to 0).
-  * Use `count_solutions` to ensure exactly one solution remains.
-  * Continue until 40–50 values are removed.
-* Write tests to confirm that multiple generated puzzles each have exactly one solution.
+## Configuration
 
-### Week 4: Benchmarking, Integration, and Polish
+### `config/config_solver.json`
 
-Goal: Validate performance improvements and finalize the project.
+Controls the logic and available puzzles.
 
-Primary Developer Tasks:
+- **`use_mvc`** (bool): Enable "Most Constrained Variable" heuristic.
+- **`use_lookahead`** (bool): Check future implications of a move to prune trees early.
+- **`puzzles`**: Add new puzzle strings here (format: 81 chars, optional _ + solution).
 
-* Add instrumentation to solvers to return:
+### `config/config_visualization.json`
 
-  * Time taken
-  * Recursion step count
-* Benchmark script:
+Controls the look and feel.
 
-  * Load puzzle set or generate new puzzles.
-  * Run both solvers and record metrics.
-  * Print comparison results.
+- **`tree_settings`**: Customize the recursion tree output (colors, indent characters).
+- **`grid_settings`**: Change border styles and colors for the Sudoku grid.
 
-Team Tasks:
+---
 
-* Build a simple CLI app (`main.py`) for user interaction:
+## Puzzle String Format
 
-  * Option to solve an existing puzzle or generate a new one.
-  * Display the puzzle and allow solver selection.
-  * Show solved result, time, and step count.
-* Perform code cleanup and documentation improvements.
+The solver accepts strings of 81 characters where `0` represents an empty cell.
+
+**Examples:**
+
+- **Standard:** `530070000600195000098...`
+- **With Solution:** `...000_534678...` (The solver automatically strips the solution part before processing).
+
+---
+
+## AI Acknowledgements
+
+Generative AI tools were utilized to assist in the development of the following components of this project:
+
+### Solver Development
+
+- **Debugging:** Analysis of backtracking logic and recursion errors; fixing `initialize_grid` and `load_config` functions; and standardizing debug print statements for consistency.
+- **Visualization:** Creation of the `sudoku_visualizer.py` script and its corresponding `config_visualization.json`. `sudoku_solver.py` was updated slightly to account for compatability.
+- **Configuration:** Updating structure and content for `config_solver.json`.
+- **Code Completion:** Utilization of AI-assisted auto-completion in Google Colab and Visual Studio Code environments. Greatly expanded the solve() function to be more robust.
+- **Code Cleanup & Comments:** Automated formatting, structure suggestions for Python files, and generation of explanatory comments for complex sections (including fixing AI-generated annotations).
+
+
+### DevOps
+
+- **GitHub Pipeline:** Creation of a `.yml` workflow for the dev branch to automate syntax checking and execute smoke tests (running the base solver and visualizer on test puzzles) to ensure stability before merging to test.
+
+### Documentation
+
+- Generation and formatting of this README.md file.
+- **Pseudocode:** Refinement of algorithmic pseudocode for consistency and improved readability.
+
+### Unit Testing
+
+_(Pending)_
+
+### Puzzle Generator
+
+_(Pending)_
+
+---
+
+## License
+
+Distributed under the GNU General Public License (GPL). See [LICENSE](LICENSE) for more information.
