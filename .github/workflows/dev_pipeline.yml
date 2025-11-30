@@ -26,13 +26,12 @@ jobs:
     - name: Base Solver Smoke Test
       working-directory: ./solver
       run: |
-        # Runs the solver on the default 'test_puzzle' logic without UI interaction
-        # We explicitly run this inside the ./solver folder so it can find 'config/'
-        python -c "from sudoku_solver import SudokuSolver; solver = SudokuSolver(config=None); print('Solving test_puzzle...'); success = solver.solve(); assert success, 'Solver failed to solve test_puzzle'"
+        # [AI Fix] Manually load config from parent dir (..) and pass to Solver to ensure settings are applied
+        python -c "import json; import sys; sys.path.append('.'); config = json.load(open('../config_solver.json')); from sudoku_solver import SudokuSolver; solver = SudokuSolver(config=config); print('Solving test_puzzle...'); success = solver.solve(); assert success, 'Solver failed to solve test_puzzle'"
 
     - name: Visualizer Smoke Test
       working-directory: ./solver
       run: |
-        # Runs the visualizer's run method directly to bypass the 'input()' prompt
-        # We explicitly run this inside the ./solver folder so it can find 'config/'
-        python -c "from sudoku_visualizer import SudokuVisualizer; viz = SudokuVisualizer(); print('Visualizing test_puzzle...'); viz.run_visualizations('test_puzzle')"
+        # [AI Fix] Updated arguments to match the Python class (config_filename)
+        # We removed '../' because the new Python script automatically searches the Project Root.
+        python -c "from sudoku_visualizer import SudokuVisualizer; viz = SudokuVisualizer(config_filename='config_solver.json', viz_config_filename='config_visualization.json'); print('Visualizing test_puzzle...'); viz.run_visualizations('test_puzzle')"

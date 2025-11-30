@@ -148,10 +148,11 @@ Generative AI tools were utilized to assist in the development of the following 
 ### Solver Development
 
 - **Debugging:** Analysis of backtracking logic and recursion errors; fixing `initialize_grid` and `load_config` functions; and standardizing debug print statements for consistency.
-- **Visualization:** Creation of the `sudoku_visualizer.py` script and its corresponding `config_visualization.json`.
+- **Visualization:** Creation of the `sudoku_visualizer.py` script and its corresponding `config_visualization.json`. `sudoku_solver.py` was updated slightly to account for compatability.
 - **Configuration:** Updating structure and content for `config_solver.json`.
-- **Code Completion:** Utilization of AI-assisted auto-completion in Google Colab and Visual Studio Code environments.
+- **Code Completion:** Utilization of AI-assisted auto-completion in Google Colab and Visual Studio Code environments. Greatly expanded the solve() function to be more robust.
 - **Code Cleanup & Comments:** Automated formatting, structure suggestions for Python files, and generation of explanatory comments for complex sections (including fixing AI-generated annotations).
+
 
 ### DevOps
 
