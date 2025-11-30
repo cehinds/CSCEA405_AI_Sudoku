@@ -1,0 +1,116 @@
+FUNCTION Init(puzzle_string, config):
+    Load configuration and set domain_size, unassigned_cell, max_attempts flags
+    Set strategy flags: use_mvc, use_lookahead, use_color (from args or config)
+    
+    IF puzzle_string is None:
+        Load puzzle from file or config
+    
+    Create domain_size × domain_size grids for cells and original_clues
+    SET backtrack_counter = 0
+    Initialize grid from puzzle_string
+
+FUNCTION initialize_grid(puzzle_string):
+    Validate puzzle_string length equals domain_size²
+    
+    FOR i from 0 to domain_size² - 1:
+        Calculate row = i ÷ domain_size
+        Calculate col = i mod domain_size
+        SET grid[row][col] = integer value of puzzle_string[i]
+        SET original_clues[row][col] = (value ≠ unassigned_cell)
+
+FUNCTION load_puzzle_from_file(config):
+    Determine puzzle file path from config or defaults
+    IF file exists, read puzzle string; ELSE load from config
+    Parse and return puzzle parts
+
+FUNCTION get_puzzle_parts(puzzle_string, config):
+    Split by "_" into puzzle and solution (validate both are domain_size² length)
+    Extract strategy flags from config
+    RETURN puzzle, use_mvc, use_lookahead, use_color
+
+FUNCTION is_safe(row, col, number):
+    Check if number conflicts in row, column, or box:
+    
+    FOR i from 0 to domain_size - 1:
+        IF grid[row][i] = number OR grid[i][col] = number:
+            RETURN False
+    
+    Calculate box boundaries (box_size = √domain_size)
+    FOR r from start_row to start_row + box_size - 1:
+        FOR c from start_col to start_col + box_size - 1:
+            IF grid[r][c] = number:
+                RETURN False
+    
+    RETURN True
+
+FUNCTION find_empty_cell():
+    IF use_mvc is False:
+        Simple search - return first empty cell:
+        FOR row from 0 to domain_size - 1:
+            FOR col from 0 to domain_size - 1:
+                IF grid[row][col] = unassigned_cell:
+                    RETURN (row, col)
+    
+    ELSE:
+        MRV heuristic - return cell with fewest valid options:
+        SET min_options = domain_size + 1
+        SET best_cell = None
+        
+        FOR row from 0 to domain_size - 1:
+            FOR col from 0 to domain_size - 1:
+                IF grid[row][col] = unassigned_cell:
+                    Count valid options for this cell:
+                    SET options = 0
+                    FOR num from 1 to domain_size:
+                        IF is_safe(row, col, num):
+                            INCREMENT options
+                    
+                    IF options < min_options:
+                        SET min_options = options
+                        SET best_cell = (row, col)
+        
+        RETURN best_cell
+    
+    RETURN None
+
+FUNCTION check_lookahead(row, col):
+    Check if any empty cell has zero valid options:
+    
+    FOR r from 0 to domain_size - 1:
+        FOR c from 0 to domain_size - 1:
+            IF grid[r][c] = unassigned_cell:
+                Check if this cell has at least one valid number:
+                FOR num from 1 to domain_size:
+                    IF is_safe(r, c, num):
+                        BREAK (this cell is ok)
+                
+                IF no valid number found:
+                    RETURN True (failure detected)
+    
+    RETURN False
+
+FUNCTION solve():
+    IF use_max_attempts AND backtrack_counter ≥ max_attempts:
+        RETURN False
+    
+    Find next empty cell (MRV or simple)
+    IF no empty cell found:
+        RETURN True (solved)
+    
+    Try each number in the cell:
+    FOR number from 1 to domain_size:
+        IF is_safe(row, col, number):
+            SET grid[row][col] = number
+            
+            IF use_lookahead AND check_lookahead detects failure:
+                SET grid[row][col] = unassigned_cell
+                CONTINUE
+            
+            IF solve() returns True:
+                RETURN True
+            
+            SET grid[row][col] = unassigned_cell (backtrack)
+            INCREMENT backtrack_counter
+    
+    RETURN False
+"""

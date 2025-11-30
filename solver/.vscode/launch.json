@@ -1,0 +1,14 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Run Sudoku Visualizer",
+            "type": "python",
+            "request": "launch",
+            "program": "${workspaceFolder}/sudoku_visualizer.py",
+            "console": "integratedTerminal",
+            "cwd": "${workspaceFolder}",
+            "justMyCode": true
+        }
+    ]
+}
