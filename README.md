@@ -32,18 +32,24 @@ Comes with test cases like Project Euler #96, Peter Norvig's hard puzzles, and A
 
 ```
 Your-Repository-Root/
+├── .git/                      # Git version control
 ├── .github/
 │   └── workflows/
 │       └── dev_pipeline.yml   # Universal CI Pipeline
-├── solver/                    # Main Project Directory
-│   ├── .vscode/               # VS Code Debug Configuration
-│   ├── config/                # Settings & puzzle strings
-│   ├── puzzles/               # Custom puzzle text files
-│   ├── sudoku_solver.py       # Core logic class
-│   └── sudoku_visualizer.py   # Main entry point & UI
-├── .gitignore
-├── LICENSE
-└── README.md
+├── colab_docs/                # Google Colab documentation
+├── config/
+│   ├── config_solver.json     # Solver configuration settings
+│   └── config_visualization.json  # Visualization settings
+├── generator/                 # Puzzle generator (in development)
+├── solver/                    # Main solver implementation
+│   ├── puzzles/
+│   │   └── my_custom_puzzle.txt  # Custom puzzle definitions
+│   ├── sudoku_solver.py       # Core solving logic
+│   └── sudoku_visualizer.py   # UI and visualization
+├── unit_tests/                # Test suite (in development)
+├── .gitignore                 # Git ignore rules
+├── LICENSE                    # Project license
+└── README.md                  # Project documentation
 ```
 
 ---
